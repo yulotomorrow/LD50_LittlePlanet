@@ -15,17 +15,17 @@ public class CannonballShoot : MonoBehaviour
 		originalPos = gameObject.transform.position;
 	}
 
-	private bool isShoot = false;
+	
 	void Update()
 	{
-		if (Input.GetKey(KeyCode.Space))
-		{
-			isShoot = true;
-		}
-		if (isShoot) 
-		{
-			pos += Time.deltaTime * cannonballSpeed;
-			gameObject.transform.position = new Vector3(posX, pos, 0);
-		}
+		pos += Time.deltaTime * cannonballSpeed;
+		gameObject.transform.position = new Vector3(posX, pos, 0);
+		if (Vector3.Distance(gameObject.transform.position, originalPos) > 15f)
+			Destroy(gameObject);
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		Destroy(gameObject);
 	}
 }
