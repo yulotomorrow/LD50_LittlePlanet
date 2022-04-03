@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class ProgressionBar : MonoBehaviour
 {
-    private const int limit = 5000; // 10000 - 30000
+    private const int limit = 8000;
     [SerializeField] private Slider progress;
     [SerializeField] private Canvas launch;
+    [SerializeField] private Text percent;
 
     private float prog = 0f;
     private int count = 0;
@@ -24,13 +25,14 @@ public class ProgressionBar : MonoBehaviour
         {
             prog = count / (1.0f * limit);
             progress.value = prog;
+            percent.text = Mathf.Round(prog * 100) + "%";
         }
         else 
         {
             prog = 1f;
             progress.value = prog;
             launch.gameObject.SetActive(true);
-
+            percent.text = "100%";
         }
     }
     private void Update()

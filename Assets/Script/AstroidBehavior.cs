@@ -10,12 +10,16 @@ public class AstroidBehavior : MonoBehaviour
 
     private float health = 100.0f;
     private float rotationSpeed;
+
+    [SerializeField] private ParticleSystem astroidFragment;
     void Start()
     {
         rotationSpeed = Random.value - 0.5f;
     }
-
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        health = 100.0f;
+    }
     void FixedUpdate()
     {
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, target, speed * Time.deltaTime);
@@ -25,13 +29,21 @@ public class AstroidBehavior : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Cannonball")
-            gameObject.SetActive(false);
+        {
+            health -= Random.Range(30f, 50f);
+            if (health <= 0f)
+            {
+                astroidFragment.transform.position = gameObject.transform.position;
+                astroidFragment.Play();
+                gameObject.SetActive(false);
+            }
+        }
         else if (collision.tag == "Player")
         {
             //gameObject.SetActive(false);
             SceneManager.LoadScene("FailScene", LoadSceneMode.Single);
         }
-        else 
+        else
         {
             // do damage to planet and also set inactive
 

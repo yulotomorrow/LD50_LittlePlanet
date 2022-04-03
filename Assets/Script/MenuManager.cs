@@ -15,9 +15,9 @@ public class MenuManager : MonoBehaviour
 		SceneManager.LoadScene("TitleScene", LoadSceneMode.Single);
 	}
 
-	public void GotoEnd()
+	public void SuccessRestartMenu()
 	{
-		SceneManager.LoadScene("EndingScene", LoadSceneMode.Single);
+		SceneManager.LoadScene("EndScene2", LoadSceneMode.Single);
 	}
 
 	public void StartGame()

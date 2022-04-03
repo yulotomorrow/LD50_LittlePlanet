@@ -14,13 +14,19 @@ public class BGMovement_Intro : MonoBehaviour
 	public float angle;
 	[SerializeField] private GameObject aya;
 	[SerializeField] private GameObject dialogC;
+	private Animator ayaAnim;
+	private Vector3 ayaScale;
 	void Start()
 	{
 		center = planet.GetComponent<Transform>().position.y;
 		bg = gameObject;
 		gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, initialAngle);
 		angle = initialAngle;
-	}
+		ayaAnim = aya.GetComponent<Animator>();
+		ayaAnim.SetBool("isRun", false);
+		ayaAnim.SetBool("isWalk", false);
+		ayaScale = aya.transform.localScale;
+}
 
 	void Update()
 	{
@@ -28,21 +34,30 @@ public class BGMovement_Intro : MonoBehaviour
 		{
 			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 			{
-				rotateSpeed = 50f;
+				rotateSpeed = 30f;
+				ayaAnim.SetBool("isRun", true);
 			}
 			else
-				rotateSpeed = 10f;
+				rotateSpeed = 15f;
 			if (Input.GetKey(KeyCode.A))
 			{
 				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, -rotateSpeed * Time.deltaTime);
 				angle += -rotateSpeed * Time.deltaTime;
 				angle %= 360;
+				ayaAnim.SetBool("isWalk", true);
+				aya.transform.localScale = new Vector3(-ayaScale.x, ayaScale.y, ayaScale.z);			
 			}
 			else if (Input.GetKey(KeyCode.D))
 			{
 				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, rotateSpeed * Time.deltaTime);
 				angle += rotateSpeed * Time.deltaTime;
 				angle %= 360;
+				ayaAnim.SetBool("isWalk", true);
+				aya.transform.localScale = ayaScale;
+			}
+			else 
+			{
+				ayaAnim.SetBool("isWalk", false);
 			}
 		}
 	}

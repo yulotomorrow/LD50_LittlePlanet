@@ -21,7 +21,7 @@ public class AstroidGeneration : MonoBehaviour
 		centerPlanet = new Vector3(0, -12, 0);
 		centerRadar = new Vector3(6.04f, -2.19f, 0);
 		radarInitial = new Vector3(6.04f, -2.19f + radarD, 0);
-		setRandomTime();
+		setRandomTimeInitial();
 	}
 
 	float enemyTimer = 0f;
@@ -73,8 +73,14 @@ public class AstroidGeneration : MonoBehaviour
 
 	void setRandomTime()
 	{
-		enemySpawnTime = Random.Range(5f, 8f);
+		enemySpawnTime = Random.Range(3.8f, 5.8f);
 //		directionRnd = Random.Range(0, 4);
+	}
+
+	void setRandomTimeInitial()
+	{
+		enemySpawnTime = Random.Range(0.6f, 1f);
+		//		directionRnd = Random.Range(0, 4);
 	}
 
 }

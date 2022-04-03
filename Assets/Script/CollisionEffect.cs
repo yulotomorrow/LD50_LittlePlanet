@@ -6,7 +6,7 @@ using UnityEngine;
 public class CollisionEffect : MonoBehaviour
 {
     private int count = 0;
-    void Awake()
+    void OnEnable()
     {
         AudioSource audio = GetComponent<AudioSource>();
         audio.Play();
