@@ -10,6 +10,7 @@ public class DialogueControl : MonoBehaviour
 	[SerializeField] private Text dialog;
 	[SerializeField] private GameObject iconField;
 	[SerializeField] private Canvas dialogCanvas;
+	[SerializeField] private Canvas indicateWalk;
 
 	[SerializeField] private Sprite[] icons;
 	private string[] names = {"Aya", "Pico"};
@@ -18,6 +19,7 @@ public class DialogueControl : MonoBehaviour
 	[SerializeField] private GameObject sphere;
 	[SerializeField] private Sprite brokenSphere;
 
+	[SerializeField] private GameObject aya;
 	[SerializeField] private GameObject bg;
 	[SerializeField] private GameObject asteroid;
 	[SerializeField] private GameObject cover;
@@ -104,7 +106,10 @@ public class DialogueControl : MonoBehaviour
 						canDialogue = false;
 						tower.GetComponent<Collider2D>().enabled = true;
 						if (!waitFlag)
+						{
 							dialogCanvas.gameObject.SetActive(false);
+							indicateWalk.gameObject.SetActive(true);
+						}
 						if (bg.GetComponent<BGMovement_Intro>().angle < 350 && bg.GetComponent<BGMovement_Intro>().angle > 310
 							&& waitFlag == false)
 						{
@@ -116,6 +121,7 @@ public class DialogueControl : MonoBehaviour
 						{
 							counterTime1 = 0;
 							dialogCanvas.gameObject.SetActive(true);
+							indicateWalk.gameObject.SetActive(false);
 							nametag.text = names[dialogueList[stage].indexNPC];
 							dialog.text = dialogueList[stage].dialogText;
 							iconField.GetComponent<SpriteRenderer>().sprite = icons[dialogueList[stage].indexIcon];
@@ -140,11 +146,13 @@ public class DialogueControl : MonoBehaviour
 					case 2:
 						canDialogue = false;
 						// 
+						//aya.GetComponent<Animator>().SetBool("isWalk", false);
 						counterTime1 += Time.deltaTime;
 						if (counterTime1 > 1.0f)
 						{
 							counterTime1 = 0;
 							dialogCanvas.gameObject.SetActive(true);
+							indicateWalk.gameObject.SetActive(false);
 							nametag.text = names[dialogueList[stage].indexNPC];
 							dialog.text = dialogueList[stage].dialogText;
 							
@@ -162,11 +170,13 @@ public class DialogueControl : MonoBehaviour
 						cover.GetComponent<Collider2D>().enabled = true;
 						tower.GetComponent<Collider2D>().enabled = false;
 						dialogCanvas.gameObject.SetActive(false);
+						indicateWalk.gameObject.SetActive(true);
 						if (cover.activeSelf == false && waitFlag == false)
 						{
 //						counterTime1 += Time.deltaTime;
 							//waitFlag = true;
 							dialogCanvas.gameObject.SetActive(true);
+							indicateWalk.gameObject.SetActive(false);
 							nametag.text = names[dialogueList[stage].indexNPC];
 							dialog.text = dialogueList[stage].dialogText;
 							iconField.GetComponent<SpriteRenderer>().sprite = icons[dialogueList[stage].indexIcon];
@@ -183,11 +193,13 @@ public class DialogueControl : MonoBehaviour
 						canControl = true;
 						canDialogue = false;
 						dialogCanvas.gameObject.SetActive(false);
+						indicateWalk.gameObject.SetActive(true);
 						if (tower.activeSelf == false)
 						{
 							radar.SetActive(true);
 							duck.SetActive(true);
 							dialogCanvas.gameObject.SetActive(true);
+							indicateWalk.gameObject.SetActive(false);
 							nametag.text = names[dialogueList[stage].indexNPC];
 							dialog.text = dialogueList[stage].dialogText;
 							iconField.GetComponent<SpriteRenderer>().sprite = icons[dialogueList[stage].indexIcon];

@@ -43,22 +43,30 @@ public class BGMovement_Intro : MonoBehaviour
 			{
 				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, -rotateSpeed * Time.deltaTime);
 				angle += -rotateSpeed * Time.deltaTime;
+				if (angle < 0)
+					angle += 360;
 				angle %= 360;
 				ayaAnim.SetBool("isWalk", true);
-				aya.transform.localScale = new Vector3(-ayaScale.x, ayaScale.y, ayaScale.z);			
+				aya.transform.localScale = new Vector3(-ayaScale.x, ayaScale.y, ayaScale.z);
 			}
 			else if (Input.GetKey(KeyCode.D))
 			{
 				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, rotateSpeed * Time.deltaTime);
 				angle += rotateSpeed * Time.deltaTime;
+				if (angle < 0)
+					angle += 360;
 				angle %= 360;
 				ayaAnim.SetBool("isWalk", true);
 				aya.transform.localScale = ayaScale;
 			}
-			else 
+			else
 			{
 				ayaAnim.SetBool("isWalk", false);
 			}
+		}
+		else 
+		{
+			ayaAnim.SetBool("isWalk", false);
 		}
 	}
 }
