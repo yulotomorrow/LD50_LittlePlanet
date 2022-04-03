@@ -28,7 +28,7 @@ public class AstroidBehavior : MonoBehaviour
             gameObject.SetActive(false);
         else if (collision.tag == "Player")
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             SceneManager.LoadScene("FailScene", LoadSceneMode.Single);
         }
         else 

@@ -5,19 +5,16 @@ using UnityEngine;
 public class AstroidGeneration : MonoBehaviour
 {
 
-	public GameObject astroid;
-	public GameObject indicator;
+	public GameObject[] astroid;
+	public GameObject[] indicator;
 
 	public static int caseNum;
 
-	private float distance = 35f;
+	private float distance = 10f;
 	private float radarD = 2.69f;
 	private Vector3 centerPlanet;
 	private Vector3 centerRadar;
 	private Vector3 radarInitial;
-
-	private GameObject randomEnemy;
-	private GameObject indicatorCopy;
 
 	void Start()
 	{
@@ -32,35 +29,51 @@ public class AstroidGeneration : MonoBehaviour
 
 	int angleRnd_large;
 	int angleRnd_small;
-
+	int astroidindex = 0;
+	bool canGenerate = false;
 	void FixedUpdate()
 	{
 		enemyTimer += Time.deltaTime;
+		canGenerate = false;
 		if (enemyTimer > enemySpawnTime)
 		{
-			astroid.SetActive(true);
-			indicator.SetActive(true);
+			for(int i = 0; i <= 2; ++i) 
+			{
+				if (astroid[i].activeSelf == false)
+				{
+					astroidindex = i;
+					canGenerate = true;
+					break;
+				}
+			}
+			if (canGenerate)
+			{
+				astroid[astroidindex].SetActive(true);
+				indicator[astroidindex].SetActive(true);
 
-			angleRnd_large = Mathf.RoundToInt(Random.value * 12f);
-			angleRnd_small = Mathf.RoundToInt((Random.value - 0.5f) * 2f);
-			setRandomTime();
+				angleRnd_large = Mathf.RoundToInt(Random.value * 12f);
+				angleRnd_small = Mathf.RoundToInt((Random.value - 0.5f) * 2f);
+				setRandomTime();
 
-			astroid.transform.position = new Vector3(0, distance, 0);
-			astroid.transform.RotateAround(centerPlanet, Vector3.forward, angleRnd_large * 30 + angleRnd_small * 8);
-			indicator.transform.position = radarInitial;
-			indicator.transform.RotateAround(centerRadar, Vector3.forward, angleRnd_large * 30 + angleRnd_small * 8);
+				astroid[astroidindex].transform.position = new Vector3(0, distance, 0);
+				astroid[astroidindex].transform.RotateAround(centerPlanet, Vector3.forward, angleRnd_large * 30 + angleRnd_small * 8);
+				indicator[astroidindex].transform.position = radarInitial;
+				indicator[astroidindex].transform.RotateAround(centerRadar, Vector3.forward, angleRnd_large * 30 + angleRnd_small * 8);
 
-			enemyTimer = 0f;
+				enemyTimer = 0f;
+			}
 		}
-//      if (CharaControl_ocean.reset == true)
-//			enemyTimer = 0f;
-		if(astroid.activeSelf == false)
-			indicator.SetActive(false);
+
+		for (int j = 0; j <= 2; ++j)
+		{
+			if (astroid[j].activeSelf == false)
+				indicator[j].SetActive(false);
+		}
 	}
 
 	void setRandomTime()
 	{
-		enemySpawnTime = Random.Range(12f, 15f);
+		enemySpawnTime = Random.Range(5f, 8f);
 //		directionRnd = Random.Range(0, 4);
 	}
 
