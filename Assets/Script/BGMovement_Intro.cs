@@ -13,6 +13,7 @@ public class BGMovement_Intro : MonoBehaviour
 	private const float initialAngle = 210;
 	public float angle;
 	[SerializeField] private GameObject aya;
+	[SerializeField] private GameObject dialogC;
 	void Start()
 	{
 		center = planet.GetComponent<Transform>().position.y;
@@ -23,23 +24,26 @@ public class BGMovement_Intro : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+		if (dialogC.GetComponent<DialogueControl>().canControl)
 		{
-			rotateSpeed = 50f;
+			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+			{
+				rotateSpeed = 50f;
+			}
+			else
+				rotateSpeed = 10f;
+			if (Input.GetKey(KeyCode.A))
+			{
+				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, -rotateSpeed * Time.deltaTime);
+				angle += -rotateSpeed * Time.deltaTime;
+				angle %= 360;
+			}
+			else if (Input.GetKey(KeyCode.D))
+			{
+				gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, rotateSpeed * Time.deltaTime);
+				angle += rotateSpeed * Time.deltaTime;
+				angle %= 360;
+			}
 		}
-		else
-			rotateSpeed = 10f;
-		if (Input.GetKey(KeyCode.A))
-		{
-			gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, -rotateSpeed * Time.deltaTime);
-			angle += -rotateSpeed * Time.deltaTime;
-			
-		}
-		else if (Input.GetKey(KeyCode.D))
-		{
-			gameObject.transform.RotateAround(new Vector3(centerX, center, 0), Vector3.forward, rotateSpeed * Time.deltaTime);
-			angle += rotateSpeed * Time.deltaTime;
-		}
-
 	}
 }

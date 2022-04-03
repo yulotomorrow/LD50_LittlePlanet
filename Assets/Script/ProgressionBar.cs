@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ProgressionBar : MonoBehaviour
 {
-    private const int limit = 150000;
+    private const int limit = 30000;
     [SerializeField] private Slider progress;
     void Start()
     {
