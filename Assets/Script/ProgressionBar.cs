@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ProgressionBar : MonoBehaviour
 {
-    private const int limit = 8000;
+    private const int limit = 7000;
     [SerializeField] private Slider progress;
     [SerializeField] private Canvas launch;
     [SerializeField] private Text percent;
